@@ -3,6 +3,9 @@ pipeline {
     environment {
         AWS_REGION = 'us-west-2' // Change to your desired AWS region
     }
+    tools {
+        terraform 'terraform' // Use the name given in the Global Tool Configuration
+    }
     stages {
         stage('Checkout Code') {
             steps {
