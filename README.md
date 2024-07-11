@@ -17,7 +17,23 @@ To access and setup jenkins locally go to a browser and follow this url : http:/
 
 ## Part 2: Kubernetes
 
-After installing minikube and kubectl (from the website)
+For installing Minikube for Linux x86-64 
+```bash
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+```
+For installing Minikube for Linux x86-64 
+```bash
+#Download latest release
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+#validate the binary
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+#install kubectl
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
+
+After installing minikube and kubectl from the website
 
 ```bash
 minikube start
@@ -56,7 +72,7 @@ some important ones --> git,docker, kubernetes, aws credentials,terraform, blue 
 
 Using the same jenkins pod running on your kubernetes cluster setup AWS credentials:
 
-![AWS Creds setup](image.png)
+![AWS Creds setup](./Pictures/image.png)
 
 
 1) Go to AWS management console as root user and go to -> IAM -> Users -> Create User 
@@ -120,3 +136,10 @@ git log --oneline
 git remote -v
 git status
 ```
+push terraform code to github
+
+create a job and Configure the pipeline 
+![alt text](./Pictures/image2.png)
+
+Build Now
+![alt text](./Pictures/image-1.png)

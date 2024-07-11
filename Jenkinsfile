@@ -1,13 +1,12 @@
 pipeline {
     agent any
     environment {
-        AWS_REGION = 'us-west-2' // Change to your desired AWS region
+        AWS_REGION = 'us-west-2'
     }
-    
+
     stages {
         stage('Checkout Code') {
             steps {
-                // Ensure you replace the URL with your GitHub repository URL
                 git branch: 'main', url: 'https://github.com/ameyak04/devopsproject.git'
             }
         }

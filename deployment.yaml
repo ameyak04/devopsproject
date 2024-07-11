@@ -2,9 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: jenkins
+  namespace: devops-tools
 spec:
   replicas: 1
+  selector:apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-service
+  namespace: devops-tools
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30000
   selector:
+    app: jenkins
+
     matchLabels:
       app: jenkins
   template:
@@ -15,9 +29,24 @@ spec:
       containers:
       - name: jenkins
         image: jenkins/jenkins:lts
+        command: ["/bin/bash", "-c"]
+        args: [
+          "echo 'Starting Jenkins'; \
+          apt-get update && apt-get install -y wget curl unzip; \
+          curl -o terraform_1.3.6_linux_amd64.zip https://releases.hashicorp.com/terraform/1.3.6/terraform_1.3.6_linux_amd64.zip; \
+          unzip terraform_1.3.6_linux_amd64.zip; \
+          mv terraform /usr/local/bin/; \
+          rm terraform_1.3.6_linux_amd64.zip; \
+          terraform --version; \
+          /usr/local/bin/jenkins.sh"
+        ]
         ports:
         - containerPort: 8080
         - containerPort: 50000
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+          allowPrivilegeEscalation: true
         volumeMounts:
         - name: jenkins-home
           mountPath: /var/jenkins_home
