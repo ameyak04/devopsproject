@@ -113,7 +113,24 @@ Using the same jenkins pod running on your kubernetes cluster setup AWS credenti
     ]
 }
 ```
-
+The above will be enough to create ec2 instances, but will show error in terraform plan, hence if you wish to give complete EC2 access to this IAM user you can use the following -  
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1312295543082",
+            "Action": [
+                "iam:ListInstanceProfilesForRole",
+                "iam:PassRole",
+                "ec2:*"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}
+```
 3) finally review and create the IAM user
 4) Now Navigate to IAM -> Users -> jenkins-user -> Security Credentials
 5) Create access-key and retrieve access-key-id and Secret Access Key 
@@ -142,5 +159,17 @@ push terraform code to github
 create a job and Configure the pipeline 
 ![alt text](./Pictures/image2.png)
 
-Build Now
+### Build Now
 ![alt text](./Pictures/image-1.png)
+
+### Build Now
+![alt text](./Pictures/image-1.png)
+
+### Succesfull Build
+![alt text](./Pictures/image3.png)
+
+now check from your aws console for the running instance
+![alt text](./Pictures/image4.png)
+
+## Part 4: Documentation
+README.md and overall git repo
