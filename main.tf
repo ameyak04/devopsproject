@@ -8,7 +8,7 @@ resource "aws_instance" "this" {
   instance_type           = "t2.micro"
 
   tags = {
-    Name = "ExampleInstance"
+    Name = "TFJenkinsInstance"
   }
 }
 
