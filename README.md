@@ -104,7 +104,8 @@ Using the same jenkins pod running on your kubernetes cluster setup AWS credenti
                 "ec2:DescribeSubnets",
                 "iam:ListInstanceProfilesForRole",
                 "iam:PassRole",
-                "ec2:GetPasswordData"
+                "ec2:GetPasswordData",
+                "ec2:DescribeTags"
             ],
             "Effect": "Allow",
             "Resource": "*"
